@@ -1,6 +1,9 @@
 import db from "@/db";
 import { advocates } from "@/db/schema";
 import { count, ilike, or } from "drizzle-orm";
+import type { InferSelectModel } from "drizzle-orm";
+
+type Advocate = InferSelectModel<typeof advocates>;
 
 interface GetAdvocatesParams {
   search?: string;
@@ -44,13 +47,13 @@ export async function getAdvocates({ search, page, pageSize }: GetAdvocatesParam
     let filteredData = allData;
     if (search) {
       const searchLower = search.toLowerCase();
-      filteredData = allData.filter((advocate: any) => {
+      filteredData = allData.filter((advocate: Advocate) => {
         return (
           advocate.firstName.toLowerCase().includes(searchLower) ||
           advocate.lastName.toLowerCase().includes(searchLower) ||
           advocate.city.toLowerCase().includes(searchLower) ||
           advocate.degree.toLowerCase().includes(searchLower) ||
-          advocate.specialties.some((specialty: string) =>
+          (advocate.specialties as string[]).some((specialty) =>
             specialty.toLowerCase().includes(searchLower)
           ) ||
           advocate.yearsOfExperience.toString().includes(search)

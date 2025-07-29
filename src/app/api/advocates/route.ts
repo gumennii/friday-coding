@@ -2,6 +2,9 @@ import { NextRequest } from "next/server";
 import db from "@/db";
 import { advocates } from "@/db/schema";
 import { count } from "drizzle-orm";
+import type { InferSelectModel } from "drizzle-orm";
+
+type Advocate = InferSelectModel<typeof advocates>;
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -51,13 +54,13 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get("search");
     if (search) {
       const searchLower = search.toLowerCase();
-      filteredData = allData.filter((advocate) => {
+      filteredData = allData.filter((advocate: Advocate) => {
         return (
           advocate.firstName.toLowerCase().includes(searchLower) ||
           advocate.lastName.toLowerCase().includes(searchLower) ||
           advocate.city.toLowerCase().includes(searchLower) ||
           advocate.degree.toLowerCase().includes(searchLower) ||
-          advocate.specialties.some((specialty: string) =>
+          (advocate.specialties as string[]).some((specialty) =>
             specialty.toLowerCase().includes(searchLower)
           ) ||
           advocate.yearsOfExperience.toString().includes(search)
