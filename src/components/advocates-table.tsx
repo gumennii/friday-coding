@@ -6,37 +6,87 @@ interface AdvocatesTableProps {
 
 export function AdvocatesTable({ advocates }: AdvocatesTableProps) {
   if (advocates.length === 0) {
-    return <p>No advocates found.</p>;
+    return (
+      <div className="text-center py-12">
+        <div className="mx-auto w-24 h-24 text-gray-400 mb-4">
+          <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+          </svg>
+        </div>
+        <p className="text-gray-600 text-lg">No advocates found</p>
+        <p className="text-gray-500 text-sm mt-1">Try adjusting your search criteria</p>
+      </div>
+    );
   }
 
   return (
-    <table style={{ width: "100%", borderCollapse: "collapse" }}>
-      <thead>
-        <tr style={{ borderBottom: "2px solid black" }}>
-          <th style={{ textAlign: "left", padding: "10px" }}>Name</th>
-          <th style={{ textAlign: "left", padding: "10px" }}>City</th>
-          <th style={{ textAlign: "left", padding: "10px" }}>Degree</th>
-          <th style={{ textAlign: "left", padding: "10px" }}>Years of Experience</th>
-          <th style={{ textAlign: "left", padding: "10px" }}>Phone Number</th>
-          <th style={{ textAlign: "left", padding: "10px" }}>Specialties</th>
-        </tr>
-      </thead>
-      <tbody>
-        {advocates.map((advocate) => (
-          <tr key={advocate.id} style={{ borderBottom: "1px solid #ccc" }}>
-            <td style={{ padding: "10px" }}>
-              {advocate.firstName} {advocate.lastName}
-            </td>
-            <td style={{ padding: "10px" }}>{advocate.city}</td>
-            <td style={{ padding: "10px" }}>{advocate.degree}</td>
-            <td style={{ padding: "10px" }}>{advocate.yearsOfExperience}</td>
-            <td style={{ padding: "10px" }}>{advocate.phoneNumber}</td>
-            <td style={{ padding: "10px" }}>
-              {advocate.specialties.join(", ")}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="overflow-hidden shadow-sm ring-1 ring-gray-200 rounded-lg">
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Name
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                City
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Degree
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Experience
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Phone
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Specialties
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {advocates.map((advocate, index) => (
+              <tr 
+                key={advocate.id} 
+                className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}
+              >
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">
+                    {advocate.firstName} {advocate.lastName}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-600">{advocate.city}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    {advocate.degree}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-600">{advocate.yearsOfExperience} years</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-600">{advocate.phoneNumber}</div>
+                </td>
+                <td className="px-6 py-4">
+                  <div className="flex flex-wrap gap-1">
+                    {advocate.specialties.map((specialty, idx) => (
+                      <span 
+                        key={idx}
+                        className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-700"
+                      >
+                        {specialty}
+                      </span>
+                    ))}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
