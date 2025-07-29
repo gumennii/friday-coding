@@ -45,7 +45,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     // If database operations fail (e.g., mock db), fall back to in-memory pagination
-    console.warn("Database query failed, using fallback:", error);
     
     const allData = await db.select().from(advocates);
     

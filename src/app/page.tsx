@@ -3,6 +3,7 @@ import { AdvocatesTable } from "@/components/advocates-table";
 import { Pagination } from "@/components/pagination";
 import { HeroSection } from "@/components/hero-section";
 import { getAdvocates } from "@/lib/advocates";
+import { PAGINATION } from "@/lib/constants";
 
 interface PageProps {
   searchParams: Promise<{ 
@@ -14,8 +15,8 @@ interface PageProps {
 export default async function Home({ searchParams }: PageProps) {
   const params = await searchParams;
   const search = params.search || "";
-  const currentPage = parseInt(params.page || "1");
-  const pageSize = 10;
+  const currentPage = parseInt(params.page || PAGINATION.DEFAULT_PAGE.toString());
+  const pageSize = PAGINATION.DEFAULT_PAGE_SIZE;
   
   // Get paginated data
   const { advocates: advocatesList, totalCount } = await getAdvocates({
