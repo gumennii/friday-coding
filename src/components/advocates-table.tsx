@@ -68,7 +68,9 @@ export function AdvocatesTable({ advocates }: AdvocatesTableProps) {
                   <div className="text-sm text-gray-600">{advocate.yearsOfExperience} years</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-600">{advocate.phoneNumber}</div>
+                  <div className="text-sm text-gray-600" title={`Phone: ${advocate.phoneNumber}`}>
+                    {advocate.phoneNumber}
+                  </div>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-wrap gap-1">
