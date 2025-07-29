@@ -1,12 +1,24 @@
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
+import { advocateData } from "./seed/advocates";
 
 const setup = () => {
   if (!process.env.DATABASE_URL) {
-    console.error("DATABASE_URL is not set");
-    return {
-      select: () => ({
-        from: () => [],
+    // Return a mock that matches Drizzle's API more closely
+    const mockDb = {
+      select: (columns?: any) => ({
+        from: () => {
+          // If selecting count, throw to trigger fallback
+          if (columns && columns.totalCount || columns && columns.count) {
+            throw new Error("Mock DB: count not supported");
+          }
+          // Return the seed data for advocates
+          return Promise.resolve(advocateData.map((advocate, index) => ({
+            ...advocate,
+            id: index + 1,
+            createdAt: new Date()
+          })));
+        },
       }),
       insert: () => ({
         values: () => ({
@@ -14,6 +26,7 @@ const setup = () => {
         }),
       }),
     };
+    return mockDb as any;
   }
 
   // for query purposes
