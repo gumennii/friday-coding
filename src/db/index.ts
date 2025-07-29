@@ -6,43 +6,35 @@ import type { advocates } from "./schema";
 
 type Advocate = InferSelectModel<typeof advocates>;
 
-interface MockDb {
-  select: (columns?: Record<string, unknown>) => {
-    from: () => Promise<Advocate[]>;
-  };
-  insert: () => {
-    values: () => {
-      returning: () => Promise<Advocate[]>;
-    };
-  };
-}
-
 const setup = () => {
   if (!process.env.DATABASE_URL) {
-    // Return a mock that matches Drizzle's API more closely
-    const mockDb: MockDb = {
-      select: (columns) => ({
-        from: () => {
-          // If selecting count, throw to trigger fallback
-          if (columns && (columns.totalCount || columns.count)) {
-            throw new Error("Mock DB: count not supported");
-          }
-          // Return the seed data for advocates
-          return Promise.resolve(advocateData.map((advocate, index) => ({
-            ...advocate,
-            id: index + 1,
-            specialties: advocate.specialties as string[],
-            createdAt: new Date()
-          })));
-        },
-      }),
+    // Return a mock that only handles the methods we actually use
+    const mockDb = {
+      select() {
+        return {
+          from: () => {
+            // Return the seed data for advocates
+            return Promise.resolve(advocateData.map((advocate, index) => ({
+              ...advocate,
+              id: index + 1,
+              specialties: advocate.specialties as string[],
+              createdAt: new Date()
+            }))) as Promise<Advocate[]>;
+          },
+          where: () => ({
+            limit: () => ({
+              offset: () => Promise.resolve([]) as Promise<Advocate[]>
+            })
+          })
+        };
+      },
       insert: () => ({
         values: () => ({
           returning: () => Promise.resolve([]),
         }),
       }),
     };
-    return mockDb as ReturnType<typeof drizzle>;
+    return mockDb as any;
   }
 
   // for query purposes
