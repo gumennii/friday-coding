@@ -8,7 +8,25 @@ type Advocate = InferSelectModel<typeof advocates>;
 
 const setup = () => {
   if (!process.env.DATABASE_URL) {
-    // Return a mock that only handles the methods we actually use
+    /**
+     * Mock Database Implementation
+     * 
+     * This mock allows the application to run without a real database connection,
+     * useful for development, testing, and demos. It returns static seed data
+     * from ./seed/advocates.ts.
+     * 
+     * The mock implements only the Drizzle methods used in this application:
+     * - select().from() for basic queries
+     * - insert().values() for seeding (returns empty array)
+     * 
+     * This approach enables:
+     * - Quick setup without database configuration
+     * - Consistent demo data for presentations
+     * - Development without external dependencies
+     * - Fallback when database is unavailable
+     * 
+     * To use a real database, set DATABASE_URL in your .env file.
+     */
     const mockDb = {
       select() {
         return {

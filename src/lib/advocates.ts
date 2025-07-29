@@ -11,6 +11,18 @@ interface GetAdvocatesParams {
   pageSize: number;
 }
 
+/**
+ * Fetches advocates with search and pagination support.
+ * 
+ * This function attempts to use the database first, but falls back to
+ * in-memory filtering if the database is unavailable (e.g., mock database).
+ * This allows the app to work both with and without a real database connection.
+ * 
+ * @param search - Optional search term to filter advocates
+ * @param page - Page number for pagination (1-based)
+ * @param pageSize - Number of items per page
+ * @returns Object containing advocates array and total count
+ */
 export async function getAdvocates({ search, page, pageSize }: GetAdvocatesParams) {
   const offset = (page - 1) * pageSize;
   

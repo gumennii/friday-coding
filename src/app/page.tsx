@@ -29,6 +29,7 @@ export default async function Home({ searchParams }: PageProps) {
 
   return (
     <>
+      {/* Only show hero section on the homepage, not on search results */}
       {!search && <HeroSection />}
       
       <main className="min-h-screen bg-gray-50">
