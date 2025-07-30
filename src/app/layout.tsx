@@ -3,8 +3,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Solace Health | Find Your Perfect Healthcare Advocate",
-  description: "Don't navigate your health alone. Connect with qualified healthcare advocates who will guide you through your medical journey and ensure you get the support you deserve.",
-  keywords: "healthcare advocates, patient advocacy, medical guidance, healthcare navigation, health support"
+  description:
+    "Don't navigate your health alone. Connect with qualified healthcare advocates who will guide you through your medical journey and ensure you get the support you deserve.",
+  keywords:
+    "healthcare advocates, patient advocacy, medical guidance, healthcare navigation, health support",
 };
 
 export default function RootLayout({
@@ -14,9 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased">
-        {children}
-      </body>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

@@ -8,16 +8,16 @@ type Advocate = InferSelectModel<typeof advocates>;
 
 /**
  * GET /api/advocates
- * 
+ *
  * Returns paginated list of advocates with optional search filtering.
- * 
+ *
  * Query Parameters:
  * - page: Page number (default: 1)
  * - limit: Items per page (default: 0 = all items)
  * - search: Search term for filtering advocates
- * 
+ *
  * Response Format:
- * 
+ *
  * Without pagination (limit=0):
  * {
  *   "data": [
@@ -34,7 +34,7 @@ type Advocate = InferSelectModel<typeof advocates>;
  *     }
  *   ]
  * }
- * 
+ *
  * With pagination:
  * {
  *   "data": [...],
@@ -45,27 +45,27 @@ type Advocate = InferSelectModel<typeof advocates>;
  *     "totalPages": 5
  *   }
  * }
- * 
+ *
  * Example Requests:
  * GET /api/advocates - Returns all advocates
  * GET /api/advocates?page=2&limit=10 - Returns page 2 with 10 items
  * GET /api/advocates?search=therapy - Returns advocates matching "therapy"
- * 
+ *
  * Performance Considerations for Scale:
- * 
+ *
  * TODO: For production with hundreds of thousands of advocates:
  * 1. Add database indexes:
  *    CREATE INDEX idx_advocates_search ON advocates(first_name, last_name, city);
  *    CREATE INDEX idx_advocates_degree ON advocates(degree);
- * 
+ *
  * 2. Implement full-text search:
  *    - PostgreSQL: Use ts_vector and ts_query
  *    - Alternative: Integrate Elasticsearch for advanced search
- * 
+ *
  * 3. Replace offset/limit with cursor pagination:
  *    - Better performance for deep pagination
  *    - Consistent results if data changes
- * 
+ *
  * 4. Cache frequently accessed data:
  *    - Use Redis or similar for caching advocate lists
  *    - Cache search results for common queries
@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
         { data },
         {
           headers: {
-            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+            "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
           },
         }
       );
@@ -98,11 +98,7 @@ export async function GET(request: NextRequest) {
       .from(advocates);
 
     // Get paginated data using limit and offset
-    const data = await db
-      .select()
-      .from(advocates)
-      .limit(limit)
-      .offset(offset);
+    const data = await db.select().from(advocates).limit(limit).offset(offset);
 
     // Return data with pagination metadata
     return NextResponse.json(
@@ -117,15 +113,15 @@ export async function GET(request: NextRequest) {
       },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
         },
       }
     );
   } catch (error) {
     // If database operations fail (e.g., mock db), fall back to in-memory pagination
-    
+
     const allData = await db.select().from(advocates);
-    
+
     // Apply search filter if provided
     let filteredData = allData;
     const search = searchParams.get("search");
@@ -144,13 +140,13 @@ export async function GET(request: NextRequest) {
         );
       });
     }
-    
+
     if (limit === 0) {
       return NextResponse.json(
         { data: filteredData },
         {
           headers: {
-            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+            "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
           },
         }
       );
@@ -172,7 +168,7 @@ export async function GET(request: NextRequest) {
       },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
         },
       }
     );

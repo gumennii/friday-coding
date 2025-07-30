@@ -16,22 +16,26 @@ This application started as a basic advocate table and has been transformed into
 ## Features
 
 ### 🔍 Search Functionality
+
 - Search across advocate names, cities, degrees, and specialties
 - URL-based search parameters for shareable results
 - Graceful fallback for database connection issues
 
 ### 📱 Responsive Design
+
 - Mobile-first approach with breakpoint-specific layouts
 - Touch-optimized interface elements
 - Horizontal scrolling for tables on small screens
 
 ### ⚡ Performance
+
 - Server-side rendering for instant page loads
 - Efficient pagination to handle large datasets
 - Cache headers for API responses
 - Optimized for hundreds of thousands of records
 
 ### 🎨 User Experience
+
 - Modern, clean interface with professional healthcare aesthetic
 - Loading states with skeleton screens
 - Empty states with helpful actions
@@ -39,6 +43,7 @@ This application started as a basic advocate table and has been transformed into
 - Specialty badges with tooltips
 
 ### ♿ Accessibility
+
 - Semantic HTML structure
 - ARIA labels for screen readers
 - Keyboard navigation support
@@ -47,20 +52,26 @@ This application started as a basic advocate table and has been transformed into
 ## Architecture Decisions
 
 ### Why Server-Side Rendering?
+
 We chose SSR over client-side rendering to:
+
 - Improve SEO for healthcare professionals' visibility
 - Reduce initial load time for users
 - Maintain functionality without JavaScript
 - Simplify state management
 
 ### Database Flexibility
+
 The application works with or without a database connection:
+
 - **With Database**: Full PostgreSQL integration using Drizzle ORM
 - **Without Database**: Falls back to mock data for development/testing
 - Seamless switching between modes
 
 ### Scalability Considerations
+
 Built with large datasets in mind:
+
 - Pagination limits data transfer
 - Database indexes planned for search columns
 - Cache-friendly API design
@@ -107,6 +118,7 @@ curl -X POST http://localhost:3000/api/seed
 ## Testing the Application
 
 ### Search Functionality
+
 1. Visit `http://localhost:3000`
 2. Try searching for:
    - Names: "John", "Sarah"
@@ -115,27 +127,33 @@ curl -X POST http://localhost:3000/api/seed
    - Degrees: "MD", "PhD"
 
 ### Pagination
+
 - Navigate through pages using the pagination controls
 - Try deep pagination (e.g., `?page=5`)
 - Combine with search (e.g., `?search=therapy&page=2`)
 
 ### Responsive Design
+
 - Resize your browser to see mobile/tablet/desktop layouts
 - Test on actual mobile devices for touch interactions
 
 ### Error Handling
+
 - Disconnect database to see fallback behavior
 - Try invalid page numbers to test error boundaries
 
 ## Performance Notes
 
 ### Current Performance
+
 - Mock data: ~15 advocates (instant response)
 - With database: Supports thousands of records efficiently
 - API caching: 60-second cache with stale-while-revalidate
 
 ### Scaling to 100,000+ Records
+
 See `DISCUSSION.md` for detailed scaling strategies including:
+
 - Database indexing strategies
 - Elasticsearch integration plans
 - Cursor-based pagination approach
@@ -155,8 +173,7 @@ src/
 ├── components/            # React components
 │   ├── advocates-table.tsx
 │   ├── hero-section.tsx
-│   ├── pagination.tsx
-│   └── search-form.tsx
+│   └── pagination.tsx
 ├── db/                    # Database layer
 │   ├── schema.ts         # Drizzle schema
 │   └── seed/             # Seed data
@@ -191,6 +208,7 @@ npm run test:coverage
 ### Test Coverage
 
 The test suite covers:
+
 - **Utility functions**: Phone formatting and text truncation
 - **Data fetching**: Advocate search and pagination logic
 - **Components**: Search form, table display, and pagination controls
@@ -206,6 +224,7 @@ The test suite covers:
 ## Environment Variables
 
 See `.env.example` for configuration options. The main variable is:
+
 - `DATABASE_URL`: PostgreSQL connection string (optional)
 
 ## Additional Documentation

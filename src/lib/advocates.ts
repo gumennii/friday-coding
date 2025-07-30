@@ -13,24 +13,28 @@ interface GetAdvocatesParams {
 
 /**
  * Fetches advocates with search and pagination support.
- * 
+ *
  * This function attempts to use the database first, but falls back to
  * in-memory filtering if the database is unavailable (e.g., mock database).
  * This allows the app to work both with and without a real database connection.
- * 
+ *
  * @param search - Optional search term to filter advocates
  * @param page - Page number for pagination (1-based)
  * @param pageSize - Number of items per page
  * @returns Object containing advocates array and total count
  */
-export async function getAdvocates({ search, page, pageSize }: GetAdvocatesParams) {
+export async function getAdvocates({
+  search,
+  page,
+  pageSize,
+}: GetAdvocatesParams) {
   const offset = (page - 1) * pageSize;
-  
+
   try {
     // Build query
     let query = db.select().from(advocates);
     let countQuery = db.select({ count: count() }).from(advocates);
-    
+
     // Add search filter if provided
     if (search) {
       const searchCondition = or(
@@ -42,19 +46,19 @@ export async function getAdvocates({ search, page, pageSize }: GetAdvocatesParam
       query = query.where(searchCondition);
       countQuery = countQuery.where(searchCondition);
     }
-    
+
     // Execute queries
     const [{ count: totalCount }] = await countQuery;
     const advocatesData = await query.limit(pageSize).offset(offset);
-    
+
     return {
       advocates: advocatesData,
-      totalCount
+      totalCount,
     };
   } catch (error) {
     // Fallback for mock database
     const allData = await db.select().from(advocates);
-    
+
     // Apply search filter if provided
     let filteredData = allData;
     if (search) {
@@ -72,13 +76,13 @@ export async function getAdvocates({ search, page, pageSize }: GetAdvocatesParam
         );
       });
     }
-    
+
     // Apply pagination
     const paginatedData = filteredData.slice(offset, offset + pageSize);
-    
+
     return {
       advocates: paginatedData,
-      totalCount: filteredData.length
+      totalCount: filteredData.length,
     };
   }
 }

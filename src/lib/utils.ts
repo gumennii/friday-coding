@@ -5,13 +5,13 @@
  */
 export function formatPhoneNumber(phoneNumber: string | number): string {
   // Convert to string and remove any non-digit characters
-  const cleaned = phoneNumber.toString().replace(/\D/g, '');
-  
+  const cleaned = phoneNumber.toString().replace(/\D/g, "");
+
   // Check if we have a valid 10-digit US phone number
   if (cleaned.length !== 10) {
     return phoneNumber.toString(); // Return original if not valid
   }
-  
+
   // Format as XXX-XXX-XXXX
   return `${cleaned.slice(0, 3)}-${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
 }
