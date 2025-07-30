@@ -11,7 +11,7 @@ export function Pagination({ currentPage, totalPages, search }: PaginationProps)
     const params = new URLSearchParams();
     if (search) params.set("search", search);
     params.set("page", page.toString());
-    return `?${params.toString()}`;
+    return `?${params.toString()}#results`;
   };
 
   // Generate page numbers to display
@@ -40,10 +40,10 @@ export function Pagination({ currentPage, totalPages, search }: PaginationProps)
       <div className="flex flex-1 justify-between sm:hidden">
         <Link
           href={createPageUrl(Math.max(1, currentPage - 1))}
-          className={`relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md ${
+          className={`relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-solace ${
             currentPage === 1
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
+              ? 'bg-solace-gray-100 text-solace-gray-400 cursor-not-allowed'
+              : 'bg-white text-solace-gray-700 hover:bg-solace-gray-50 border border-solace-gray-200'
           }`}
           aria-disabled={currentPage === 1}
         >
@@ -51,10 +51,10 @@ export function Pagination({ currentPage, totalPages, search }: PaginationProps)
         </Link>
         <Link
           href={createPageUrl(Math.min(totalPages, currentPage + 1))}
-          className={`relative ml-3 inline-flex items-center px-4 py-2 text-sm font-medium rounded-md ${
+          className={`relative ml-3 inline-flex items-center px-4 py-2 text-sm font-medium rounded-solace ${
             currentPage === totalPages
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
+              ? 'bg-solace-gray-100 text-solace-gray-400 cursor-not-allowed'
+              : 'bg-white text-solace-gray-700 hover:bg-solace-gray-50 border border-solace-gray-200'
           }`}
           aria-disabled={currentPage === totalPages}
         >
@@ -64,15 +64,15 @@ export function Pagination({ currentPage, totalPages, search }: PaginationProps)
       
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center">
         <div>
-          <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+          <nav className="relative z-0 inline-flex rounded-solace shadow-solace -space-x-px" aria-label="Pagination">
             {/* Previous button */}
             <Link
               href={createPageUrl(Math.max(1, currentPage - 1))}
-              className={`relative inline-flex items-center px-2 py-2 rounded-l-md border ${
+              className={`relative inline-flex items-center px-3 py-2 rounded-l-solace border ${
                 currentPage === 1
-                  ? 'bg-gray-100 text-gray-300 cursor-not-allowed border-gray-200'
-                  : 'bg-white text-gray-500 hover:bg-gray-50 border-gray-300'
-              } text-sm font-medium`}
+                  ? 'bg-solace-gray-100 text-solace-gray-300 cursor-not-allowed border-solace-gray-200'
+                  : 'bg-white text-solace-gray-500 hover:bg-solace-gray-50 border-solace-gray-200'
+              } text-sm font-medium transition-colors`}
               aria-disabled={currentPage === 1}
             >
               <span className="sr-only">Previous</span>
@@ -86,12 +86,12 @@ export function Pagination({ currentPage, totalPages, search }: PaginationProps)
               <>
                 <Link
                   href={createPageUrl(1)}
-                  className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                  className="relative inline-flex items-center px-4 py-2 border border-solace-gray-200 bg-white text-sm font-medium text-solace-gray-700 hover:bg-solace-gray-50 transition-colors"
                 >
                   1
                 </Link>
                 {pageNumbers[0] > 2 && (
-                  <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                  <span className="relative inline-flex items-center px-4 py-2 border border-solace-gray-200 bg-white text-sm font-medium text-solace-gray-700">
                     ...
                   </span>
                 )}
@@ -103,10 +103,10 @@ export function Pagination({ currentPage, totalPages, search }: PaginationProps)
               <Link
                 key={page}
                 href={createPageUrl(page)}
-                className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors ${
                   page === currentPage
-                    ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
-                    : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
+                    ? 'z-10 bg-solace-gold-light border-solace-gold text-solace-gray-800'
+                    : 'bg-white border-solace-gray-200 text-solace-gray-700 hover:bg-solace-gray-50'
                 }`}
                 aria-current={page === currentPage ? 'page' : undefined}
               >
@@ -118,13 +118,13 @@ export function Pagination({ currentPage, totalPages, search }: PaginationProps)
             {pageNumbers[pageNumbers.length - 1] < totalPages && (
               <>
                 {pageNumbers[pageNumbers.length - 1] < totalPages - 1 && (
-                  <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                  <span className="relative inline-flex items-center px-4 py-2 border border-solace-gray-200 bg-white text-sm font-medium text-solace-gray-700">
                     ...
                   </span>
                 )}
                 <Link
                   href={createPageUrl(totalPages)}
-                  className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                  className="relative inline-flex items-center px-4 py-2 border border-solace-gray-200 bg-white text-sm font-medium text-solace-gray-700 hover:bg-solace-gray-50 transition-colors"
                 >
                   {totalPages}
                 </Link>
@@ -134,11 +134,11 @@ export function Pagination({ currentPage, totalPages, search }: PaginationProps)
             {/* Next button */}
             <Link
               href={createPageUrl(Math.min(totalPages, currentPage + 1))}
-              className={`relative inline-flex items-center px-2 py-2 rounded-r-md border ${
+              className={`relative inline-flex items-center px-3 py-2 rounded-r-solace border ${
                 currentPage === totalPages
-                  ? 'bg-gray-100 text-gray-300 cursor-not-allowed border-gray-200'
-                  : 'bg-white text-gray-500 hover:bg-gray-50 border-gray-300'
-              } text-sm font-medium`}
+                  ? 'bg-solace-gray-100 text-solace-gray-300 cursor-not-allowed border-solace-gray-200'
+                  : 'bg-white text-solace-gray-500 hover:bg-solace-gray-50 border-solace-gray-200'
+              } text-sm font-medium transition-colors`}
               aria-disabled={currentPage === totalPages}
             >
               <span className="sr-only">Next</span>

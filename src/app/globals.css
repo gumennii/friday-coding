@@ -1,3 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Custom Font - Mollie Glaston */
+@font-face {
+  font-family: 'Mollie Glaston';
+  src: url('/fonts/mollie-glaston.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-sans text-solace-gray-800 bg-white;
+  }
+
+  h1 {
+    @apply font-mollie text-solace-gray-900;
+  }
+  
+  h2, h3, h4, h5, h6 {
+    @apply font-sans font-semibold text-solace-gray-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-solace-gold text-solace-gray-900 px-8 py-3 rounded-full font-medium 
+           hover:bg-solace-gold-dark transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-solace-gold focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-solace-gray-900 px-8 py-3 rounded-full font-medium 
+           border border-solace-gray-300 hover:bg-solace-gray-50 
+           transition-colors duration-200 focus:outline-none focus:ring-2 
+           focus:ring-solace-gray-400 focus:ring-offset-2;
+  }
+  
+  .btn-green {
+    @apply bg-solace-green text-white px-6 py-2.5 rounded-solace font-medium 
+           hover:bg-solace-green-dark transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-solace-green focus:ring-offset-2;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 text-solace-gray-900 placeholder-solace-gray-400 
+           bg-white border border-solace-gray-300 rounded-md
+           focus:outline-none focus:ring-2 focus:ring-solace-green focus:border-transparent 
+           transition-all duration-200;
+  }
+}
