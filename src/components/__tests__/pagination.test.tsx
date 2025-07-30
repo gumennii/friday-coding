@@ -17,9 +17,9 @@ describe('Pagination', () => {
     render(<Pagination currentPage={2} totalPages={5} search="therapist" />);
     
     const page3Link = screen.getByText('3').closest('a');
-    expect(page3Link).toHaveAttribute('href', '?search=therapist&page=3');
+    expect(page3Link).toHaveAttribute('href', '?search=therapist&page=3#results');
     
     const nextLinks = screen.getAllByText('Next');
-    expect(nextLinks[0].closest('a')).toHaveAttribute('href', '?search=therapist&page=3');
+    expect(nextLinks[0].closest('a')).toHaveAttribute('href', '?search=therapist&page=3#results');
   });
 });

@@ -33,7 +33,7 @@ describe('AdvocatesTable', () => {
     // Verify key data is displayed
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('New York')).toBeInTheDocument();  
-    expect(screen.getByText('Cardiology')).toBeInTheDocument();
+    expect(screen.getByText('Cardiology,')).toBeInTheDocument();
     expect(screen.getByText('Psychology')).toBeInTheDocument();
   });
 
