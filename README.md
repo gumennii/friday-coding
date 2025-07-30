@@ -168,6 +168,41 @@ src/
 
 ```
 
+## Testing
+
+This project uses **Vitest** for fast, modern testing with TypeScript support.
+
+### Running Tests
+
+```bash
+# Run tests in watch mode (development)
+npm test
+
+# Run tests once (CI/production)
+npm run test:run
+
+# Run tests with UI dashboard
+npm run test:ui
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+### Test Coverage
+
+The test suite covers:
+- **Utility functions**: Phone formatting and text truncation
+- **Data fetching**: Advocate search and pagination logic
+- **Components**: Search form, table display, and pagination controls
+- **User interactions**: Form submissions and navigation
+
+### Test Architecture
+
+- **Vitest**: 3-4x faster than Jest with better TypeScript support
+- **React Testing Library**: User-centric testing approach
+- **Mock Database**: Tests run against consistent seed data
+- **Component Testing**: Focus on user behavior, not implementation
+
 ## Environment Variables
 
 See `.env.example` for configuration options. The main variable is:
